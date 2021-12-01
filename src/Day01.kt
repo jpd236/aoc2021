@@ -4,7 +4,7 @@ fun main() {
     }
 
     fun part2(input: List<String>) {
-        
+
     }
 
     // test if implementation meets criteria from the description, like:
