@@ -22,3 +22,18 @@ fun List<Int>.median(): Double {
         return (sorted[sorted.size / 2 - 1] + sorted[sorted.size / 2]) / 2.toDouble()
     }
 }
+
+fun <T> List<T>.permute(): Sequence<List<T>> = sequence {
+    if (size <= 1) {
+        yield(this@permute)
+    } else {
+        val toInsert = get(0)
+        for (perm in drop(1).permute()) {
+            for (i in 0..perm.size) {
+                val newPerm = perm.toMutableList()
+                newPerm.add(i, toInsert)
+                yield(newPerm)
+            }
+        }
+    }
+}
