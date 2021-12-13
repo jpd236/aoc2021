@@ -37,3 +37,5 @@ fun <T> List<T>.permute(): Sequence<List<T>> = sequence {
         }
     }
 }
+
+fun <T> List<T>.freq(): Map<T, Int> = groupingBy { it }.eachCount()

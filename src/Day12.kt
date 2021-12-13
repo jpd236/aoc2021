@@ -26,7 +26,7 @@ fun main() {
         }
         val neighbors = graph.filter { (key, _) -> key == prefix.last() }.map { it.second }
             .filter { neighbor ->
-                val hasSeenSmallTwice = prefix.groupingBy { it }.eachCount().entries.any { (key, value) ->
+                val hasSeenSmallTwice = prefix.freq().entries.any { (key, value) ->
                     key.matches("[a-z]+".toRegex()) && value == 2
                 }
                 neighbor.matches("[A-Z]+".toRegex())
