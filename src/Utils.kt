@@ -39,3 +39,6 @@ fun <T> List<T>.permute(): Sequence<List<T>> = sequence {
 }
 
 fun <T> List<T>.freq(): Map<T, Int> = groupingBy { it }.eachCount()
+
+fun <T> MutableMap<T, Int>.inc(key: T, incAmount: Int) = set(key, getOrDefault(key, 0) + incAmount)
+fun <T> MutableMap<T, Long>.inc(key: T, incAmount: Long) = set(key, getOrDefault(key, 0L) + incAmount)
