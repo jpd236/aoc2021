@@ -1,6 +1,6 @@
 import kotlin.math.max
 
-sealed class Node {
+sealed class Day18Node {
     override fun toString(): String {
         return when (this) {
             is NumberNode -> value.toString()
@@ -8,11 +8,11 @@ sealed class Node {
         }
     }
 }
-class NumberNode(var value: Int) : Node()
-class PairNode(var left: Node, var right: Node): Node()
+class NumberNode(var value: Int) : Day18Node()
+class PairNode(var left: Day18Node, var right: Day18Node): Day18Node()
 
 fun main() {
-    fun parseTree(input: String): Pair<Node, String> {
+    fun parseTree(input: String): Pair<Day18Node, String> {
         return if (input.startsWith('[')) {
             val leftResult = parseTree(input.substring(1))
             val rightResult = parseTree(leftResult.second.substring((1)))
@@ -23,13 +23,13 @@ fun main() {
         }
     }
 
-    fun explode(node: Node): Boolean {
+    fun explode(node: Day18Node): Boolean {
         var depth = 0
         var prevNumber: NumberNode? = null
         var numberToAdd: Int? = null
         var curParent: PairNode? = null
         var curIsLeft = true
-        fun traverse(node: Node): Boolean {
+        fun traverse(node: Day18Node): Boolean {
             when (node) {
                 is NumberNode -> {
                     if (numberToAdd != null) {
@@ -70,11 +70,11 @@ fun main() {
         return numberToAdd != null
     }
 
-    fun split(node: Node): Boolean {
+    fun split(node: Day18Node): Boolean {
         var curParent: PairNode? = null
         var curIsLeft = true
         var found = false
-        fun traverse(node: Node) {
+        fun traverse(node: Day18Node) {
             when (node) {
                 is NumberNode -> {
                     if (node.value >= 10 && !found) {
@@ -103,14 +103,14 @@ fun main() {
         return found
     }
 
-    fun magnitude(node: Node): Long {
+    fun magnitude(node: Day18Node): Long {
         return when (node) {
             is NumberNode -> node.value.toLong()
             is PairNode -> 3 * magnitude(node.left) + 2 * magnitude(node.right)
         }
     }
 
-    fun combine(node1: Node, node2: Node): Node {
+    fun combine(node1: Day18Node, node2: Day18Node): Day18Node {
         val result = PairNode(node1, node2)
         do {
             var hasReduction = explode(result)
